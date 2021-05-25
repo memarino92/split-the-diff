@@ -1,8 +1,16 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { useState } from 'react'
 
 export default function Home() {
+  //declare state variables
+  const [totalOne, setTotalOne] = useState(10)
+  const [totalTwo, setTotalTwo] = useState(20)
+
+  //declare event handlers
+  const handleTotalOneChange = (e) => setTotalOne(e.target.value)
+
   return (
     <div className={styles.container}>
       <Head>
@@ -23,17 +31,29 @@ export default function Home() {
         <div className={styles.grid}>
           <div className={styles.card}>
             <h2>Total One</h2>
-            <p>$10.00</p>
+            <p>
+              $<input 
+                type="text" 
+                id="total-one" 
+                defaultValue={totalOne}
+                onChange={handleTotalOneChange} /> 
+            </p>
           </div>
 
           <div className={styles.card}>
             <h2>Total Two</h2>
-            <p>$20.00</p>
+            <p>
+              $<input type="text" id="total-two" defualtValue={totalTwo} /> 
+            </p>
           </div>
 
           <div className={styles.card}>
             <h2>Split the Diff!</h2>
-            <p>1 &rarr; 2 $5</p>
+            <p>
+              1 {totalOne < totalTwo ? <>&rarr;</>:<>&larr;</>} 2 
+              <br />
+              ${(totalTwo - totalOne)/2}
+            </p>
           </div>
         </div>
       </main>
