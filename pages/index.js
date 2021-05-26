@@ -10,6 +10,7 @@ export default function Home() {
 
   //declare event handlers
   const handleTotalOneChange = (e) => setTotalOne(e.target.value)
+  const handleTotalTwoChange = (e) => setTotalTwo(e.target.value)
 
   return (
     <div className={styles.container}>
@@ -36,6 +37,7 @@ export default function Home() {
                 type="text" 
                 id="total-one" 
                 defaultValue={totalOne}
+                value={totalOne}
                 onChange={handleTotalOneChange} /> 
             </p>
           </div>
@@ -43,17 +45,33 @@ export default function Home() {
           <div className={styles.card}>
             <h2>Total Two</h2>
             <p>
-              $<input type="text" id="total-two" defualtValue={totalTwo} /> 
+              $<input 
+              type="text" 
+              id="total-two" 
+              defualtValue={totalTwo} 
+              value={totalTwo}
+              onChange={handleTotalTwoChange} /> 
             </p>
           </div>
 
           <div className={styles.card}>
             <h2>Split the Diff!</h2>
-            <p>
-              1 {totalOne < totalTwo ? <>&rarr;</>:<>&larr;</>} 2 
-              <br />
-              ${(totalTwo - totalOne)/2}
-            </p>
+            {totalOne < totalTwo ?
+              <>
+                <p>
+                  1 &rarr; 2
+                  <br />
+                  ${(totalTwo - totalOne) / 2}
+                </p>
+              </> 
+              :
+              <>
+                <p>
+                  1 &larr; 2
+                  <br />
+                  ${(totalOne - totalTwo) / 2}
+                </p>
+              </>}
           </div>
         </div>
       </main>
