@@ -1,14 +1,20 @@
 import styles from '../styles/Home.module.css'
+import ExpenseList from './ExpenseList'
 
-export default function TotalCard({ title, defaultValue, value, handleChange }) {
+export default function TotalCard({ title, handleChange, handleSubmit, listOfTotals }) {
     return (
         <div className={styles.card}>
             <h2>{title}</h2>
             <p>
-              $<input 
-                type="text"  
-                value={value}
-                onChange={handleChange} /> 
+              <form onSubmit={handleSubmit}>
+                $<input 
+                  type="text"
+                  onChange={handleChange} /> 
+              </form>
+            </p>
+            <p>
+              <ExpenseList 
+              expenseList={listOfTotals} />
             </p>
           </div>
     )

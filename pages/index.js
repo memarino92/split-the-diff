@@ -8,12 +8,28 @@ import ResultCard from '../components/ResultCard'
 
 export default function Home() {
   //declare state variables
-  const [totalOne, setTotalOne] = useState(10)
-  const [totalTwo, setTotalTwo] = useState(20)
+  const [totalOne, setTotalOne] = useState(0)
+  const [totalTwo, setTotalTwo] = useState(0)
+  
+  const [listOfTotalsOne, setListOfTotalsOne] = useState([])
+  const [listOfTotalsTwo, setListOfTotalsTwo] = useState([])
 
   //declare event handlers
-  const handleTotalOneChange = (e) => setTotalOne(e.target.value)
-  const handleTotalTwoChange = (e) => setTotalTwo(e.target.value)
+  const handleTotalOneChange = (e) => {
+    setTotalOne(Number(e.target.value))
+  }
+  const handleTotalTwoChange = (e) => {
+    setTotalTwo(Number(e.target.value))
+  }
+  
+  const handleTotalOneSubmit = (e) => {
+    e.preventDefault();
+    setListOfTotalsOne([...listOfTotalsOne, totalOne])
+  }
+  const handleTotalTwoSubmit = (e) => {
+    e.preventDefault();
+    setListOfTotalsTwo([...listOfTotalsTwo, totalTwo])
+  }
 
   return (
     <div className={styles.container}>
@@ -29,17 +45,19 @@ export default function Home() {
         <div className={styles.grid}>
           <TotalCard 
           title="Total One"
-          value={totalOne}
-          handleChange={handleTotalOneChange} />
+          handleChange={handleTotalOneChange}
+          handleSubmit={handleTotalOneSubmit} 
+          listOfTotals={listOfTotalsOne} />
 
           <TotalCard 
           title="Total Two"
-          value={totalTwo}
-          handleChange={handleTotalTwoChange} />
+          handleChange={handleTotalTwoChange}
+          handleSubmit={handleTotalTwoSubmit}
+          listOfTotals={listOfTotalsTwo} />
 
           <ResultCard 
-          totalOne={totalOne}
-          totalTwo={totalTwo} />
+          totalOne={listOfTotalsOne.reduce((total, num) => total + num, 0)}
+          totalTwo={listOfTotalsTwo.reduce((total, num) => total + num, 0)} />
         </div>
       </main>
       <Footer />      
