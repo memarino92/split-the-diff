@@ -1,10 +1,10 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { useState } from 'react'
-import Headline from '../components/headline'
-import TotalCard from '../components/totalCard'
-import Footer from '../components/footer'
-import ResultCard from '../components/resultCard'
+import Headline from '../components/Headline'
+import TotalCard from '../components/TotalCard'
+import Footer from '../components/Footer'
+import ResultCard from '../components/ResultCard'
 
 export default function Home() {
   //declare state variables
@@ -29,13 +29,11 @@ export default function Home() {
         <div className={styles.grid}>
           <TotalCard 
           title="Total One"
-          defaultValue={totalOne}
           value={totalOne}
           handleChange={handleTotalOneChange} />
 
           <TotalCard 
           title="Total Two"
-          defaultValue={totalTwo}
           value={totalTwo}
           handleChange={handleTotalTwoChange} />
 

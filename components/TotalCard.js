@@ -7,7 +7,6 @@ export default function TotalCard({ title, defaultValue, value, handleChange }) 
             <p>
               $<input 
                 type="text"  
-                defaultValue={defaultValue}
                 value={value}
                 onChange={handleChange} /> 
             </p>
