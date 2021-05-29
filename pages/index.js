@@ -1,7 +1,10 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useState } from 'react'
+import Headline from '../components/headline'
+import TotalCard from '../components/totalCard'
+import Footer from '../components/footer'
+import ResultCard from '../components/resultCard'
 
 export default function Home() {
   //declare state variables
@@ -21,73 +24,27 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Split the Diff
-        </h1>
-
-        <p className={styles.description}>
-          Just here to help
-        </p>
+        <Headline />
 
         <div className={styles.grid}>
-          <div className={styles.card}>
-            <h2>Total One</h2>
-            <p>
-              $<input 
-                type="text" 
-                id="total-one" 
-                defaultValue={totalOne}
-                value={totalOne}
-                onChange={handleTotalOneChange} /> 
-            </p>
-          </div>
+          <TotalCard 
+          title="Total One"
+          defaultValue={totalOne}
+          value={totalOne}
+          handleChange={handleTotalOneChange} />
 
-          <div className={styles.card}>
-            <h2>Total Two</h2>
-            <p>
-              $<input 
-              type="text" 
-              id="total-two" 
-              defualtValue={totalTwo} 
-              value={totalTwo}
-              onChange={handleTotalTwoChange} /> 
-            </p>
-          </div>
+          <TotalCard 
+          title="Total Two"
+          defaultValue={totalTwo}
+          value={totalTwo}
+          handleChange={handleTotalTwoChange} />
 
-          <div className={styles.card}>
-            <h2>Split the Diff!</h2>
-            {totalOne < totalTwo ?
-              <>
-                <p>
-                  1 &rarr; 2
-                  <br />
-                  ${(totalTwo - totalOne) / 2}
-                </p>
-              </> 
-              :
-              <>
-                <p>
-                  1 &larr; 2
-                  <br />
-                  ${(totalOne - totalTwo) / 2}
-                </p>
-              </>}
-          </div>
+          <ResultCard 
+          totalOne={totalOne}
+          totalTwo={totalTwo} />
         </div>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+      <Footer />      
     </div>
   )
 }
