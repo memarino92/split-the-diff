@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Headline from '../components/Headline'
 import TotalCard from '../components/TotalCard'
 import Footer from '../components/Footer'
@@ -11,24 +11,31 @@ export default function Home() {
   const [totalOne, setTotalOne] = useState(0)
   const [totalTwo, setTotalTwo] = useState(0)
   
-  const [listOfTotalsOne, setListOfTotalsOne] = useState([])
-  const [listOfTotalsTwo, setListOfTotalsTwo] = useState([])
+  const [arrayOfExpensesOne, _setArrayOfExpensesOne] = useState([])
+  const arrayOfExpensesOneRef = useRef(arrayOfExpensesOne)
+  const setArrayOfExpensesOne = (data) => {
+    arrayOfExpensesOneRef.current = data
+    _setArrayOfExpensesOne(data)
+  }
+
+  const [arrayOfExpensesTwo, _setArrayOfExpensesTwo] = useState([])
+  const arrayOfExpensesTwoRef = useRef(arrayOfExpensesTwo)
+  const setArrayOfExpensesTwo = (data) => {
+    arrayOfExpensesTwoRef.current = data
+    _setArrayOfExpensesTwo(data)
+  }
+
 
   //declare event handlers
-  const handleTotalOneChange = (e) => {
-    setTotalOne(Number(e.target.value))
+  const onTotalOneSubmit = (values) => {
+    values.amount = Number(values.amount)
+    setArrayOfExpensesOne([...arrayOfExpensesOne, values])
+    setTotalOne(arrayOfExpensesOneRef.current.reduce((total, num) => total + num.amount, 0))
   }
-  const handleTotalTwoChange = (e) => {
-    setTotalTwo(Number(e.target.value))
-  }
-  
-  const handleTotalOneSubmit = (e) => {
-    e.preventDefault();
-    setListOfTotalsOne([...listOfTotalsOne, totalOne])
-  }
-  const handleTotalTwoSubmit = (e) => {
-    e.preventDefault();
-    setListOfTotalsTwo([...listOfTotalsTwo, totalTwo])
+  const onTotalTwoSubmit = (values) => {
+    values.amount = Number(values.amount)
+    setArrayOfExpensesTwo([...arrayOfExpensesTwo, values])
+    setTotalTwo(arrayOfExpensesTwoRef.current.reduce((total, num) => total + num.amount, 0))
   }
 
   return (
@@ -45,19 +52,20 @@ export default function Home() {
         <div className={styles.grid}>
           <TotalCard 
           title="Total One"
-          handleChange={handleTotalOneChange}
-          handleSubmit={handleTotalOneSubmit} 
-          listOfTotals={listOfTotalsOne} />
+          onSubmit={onTotalOneSubmit} 
+          arrayOfExpenses={arrayOfExpensesOne} 
+          total={totalOne} />
+          
 
           <TotalCard 
           title="Total Two"
-          handleChange={handleTotalTwoChange}
-          handleSubmit={handleTotalTwoSubmit}
-          listOfTotals={listOfTotalsTwo} />
+          onSubmit={onTotalTwoSubmit}
+          arrayOfExpenses={arrayOfExpensesTwo} 
+          total={totalTwo} />
 
           <ResultCard 
-          totalOne={listOfTotalsOne.reduce((total, num) => total + num, 0)}
-          totalTwo={listOfTotalsTwo.reduce((total, num) => total + num, 0)} />
+          totalOne={totalOne}
+          totalTwo={totalTwo} />
         </div>
       </main>
       <Footer />      

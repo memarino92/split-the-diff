@@ -5,13 +5,13 @@ export default function ExpenseList({ expenseList }) {
     return (
         <div className={styles.expenseList}>
             {
-            expenseList.map((expense) => {
-                return (
-                        <Expense
-                        expense={expense} />
-                        )
-                    }
-                )
+                expenseList.map((expense, index) => {
+                    return (
+                            <Expense
+                            key={index}
+                            expense={expense} />
+                    )
+                })
             }
         </div>
     )
