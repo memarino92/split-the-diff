@@ -1,15 +1,16 @@
 import Expense from './Expense'
 import styles from '../styles/Home.module.css'
 
-export default function ExpenseList({ expenseList }) {
+export default function ExpenseList({ expenseList, removeExpense }) {
     return (
         <div className={styles.expenseList}>
             {
-                expenseList.map((expense, index) => {
+                expenseList.map((expense) => {
                     return (
                             <Expense
-                            key={index}
-                            expense={expense} />
+                            key={expense.id}
+                            expense={expense}
+                            removeExpense={removeExpense} />
                     )
                 })
             }

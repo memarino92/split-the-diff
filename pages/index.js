@@ -5,6 +5,7 @@ import Headline from '../components/Headline'
 import TotalCard from '../components/TotalCard'
 import Footer from '../components/Footer'
 import ResultCard from '../components/ResultCard'
+import shortid from 'shortid'
 
 export default function Home() {
   //declare state variables
@@ -29,13 +30,20 @@ export default function Home() {
   //declare event handlers
   const onTotalOneSubmit = (values) => {
     values.amount = Number(values.amount)
-    setArrayOfExpensesOne([...arrayOfExpensesOne, values])
+    values.id  = shortid.generate()
+    setArrayOfExpensesOne([...arrayOfExpensesOneRef.current, values])
     setTotalOne(arrayOfExpensesOneRef.current.reduce((total, num) => total + num.amount, 0))
   }
   const onTotalTwoSubmit = (values) => {
     values.amount = Number(values.amount)
     setArrayOfExpensesTwo([...arrayOfExpensesTwo, values])
     setTotalTwo(arrayOfExpensesTwoRef.current.reduce((total, num) => total + num.amount, 0))
+  }
+
+  const removeExpense = (id) => {
+    const newExpenses = arrayOfExpensesOne.filter((expense) => expense.id !== id)
+    setArrayOfExpensesOne(newExpenses)
+    setTotalOne(arrayOfExpensesOneRef.current.reduce((total, num) => total + num.amount, 0))
   }
 
   return (
@@ -53,7 +61,8 @@ export default function Home() {
           <TotalCard 
           title="Total One"
           onSubmit={onTotalOneSubmit} 
-          arrayOfExpenses={arrayOfExpensesOne} 
+          arrayOfExpenses={arrayOfExpensesOne}
+          removeExpense={removeExpense} 
           total={totalOne} />
           
 
