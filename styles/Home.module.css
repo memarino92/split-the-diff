@@ -121,11 +121,25 @@
   border-color: #0070f3;
 }
 
-.nameInput {
+.expenseForm div {
+  display: inline;
+}
+
+.nameInput div {
+  display: inline-block;
+}
+.nameInput label {
+  display: block;
+}
+
+.nameInput input {
   width: 50%;
 }
 
-.amountInput {
+.amountInput label {
+  display: block;
+}
+.amountInput input {
   width: 25%;
 }
 

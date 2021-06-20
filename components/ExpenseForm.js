@@ -1,13 +1,14 @@
+import { useRef } from 'react';
 import { Form, Field } from 'react-final-form';
 import styles from '../styles/Home.module.css';
 
-export default function ExpenseForm({ onSubmit }) {
+export default function ExpenseForm({ onSubmit, nameInputRef }) {
   return (
     <Form
       onSubmit={onSubmit}
       render={({ handleSubmit, form, reset }) => (
         <form onSubmit={handleSubmit}>
-          <div>
+          <div className={styles.expenseForm}>
             <div className={styles.nameInput}>
               <label>Name</label>
               <Field
@@ -15,6 +16,7 @@ export default function ExpenseForm({ onSubmit }) {
                 component='input'
                 type='text'
                 placeholder='Name'
+                ref={nameInputRef}
               />
             </div>
             <div className={styles.amountInput}>

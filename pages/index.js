@@ -26,6 +26,10 @@ export default function Home() {
     _setArrayOfExpensesTwo(data);
   };
 
+  //set refs
+  const nameInputOneRef = useRef(null);
+  const nameInputTwoRef = useRef(null);
+
   //declare event handlers
   const onTotalOneSubmit = (values, form) => {
     values.amount = Number(values.amount);
@@ -37,11 +41,12 @@ export default function Home() {
         0
       )
     );
-    form.focus('name');
     form.reset();
+    nameInputOneRef.current.focus();
   };
-  const onTotalTwoSubmit = (values) => {
+  const onTotalTwoSubmit = (values, form) => {
     values.amount = Number(values.amount);
+    values.id = shortid.generate();
     setArrayOfExpensesTwo([...arrayOfExpensesTwo, values]);
     setTotalTwo(
       arrayOfExpensesTwoRef.current.reduce(
@@ -49,15 +54,29 @@ export default function Home() {
         0
       )
     );
+    form.reset();
+    nameInputTwoRef.current.focus();
   };
 
-  const removeExpense = (id) => {
+  const removeExpenseOne = (id) => {
     const newExpenses = arrayOfExpensesOne.filter(
       (expense) => expense.id !== id
     );
     setArrayOfExpensesOne(newExpenses);
     setTotalOne(
       arrayOfExpensesOneRef.current.reduce(
+        (total, num) => total + num.amount,
+        0
+      )
+    );
+  };
+  const removeExpenseTwo = (id) => {
+    const newExpenses = arrayOfExpensesTwo.filter(
+      (expense) => expense.id !== id
+    );
+    setArrayOfExpensesTwo(newExpenses);
+    setTotalTwo(
+      arrayOfExpensesTwoRef.current.reduce(
         (total, num) => total + num.amount,
         0
       )
@@ -80,15 +99,18 @@ export default function Home() {
             title='Total One'
             onSubmit={onTotalOneSubmit}
             arrayOfExpenses={arrayOfExpensesOne}
-            removeExpense={removeExpense}
+            removeExpense={removeExpenseOne}
             total={totalOne}
+            nameInputRef={nameInputOneRef}
           />
 
           <TotalCard
             title='Total Two'
             onSubmit={onTotalTwoSubmit}
             arrayOfExpenses={arrayOfExpensesTwo}
+            removeExpense={removeExpenseTwo}
             total={totalTwo}
+            nameInputRef={nameInputTwoRef}
           />
 
           <ResultCard totalOne={totalOne} totalTwo={totalTwo} />

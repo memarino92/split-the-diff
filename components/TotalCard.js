@@ -8,12 +8,13 @@ export default function TotalCard({
   arrayOfExpenses,
   removeExpense,
   total,
+  nameInputRef,
 }) {
   return (
     <div className={styles.card}>
       <h2>{title}</h2>
       <div>
-        <ExpenseForm onSubmit={onSubmit} />
+        <ExpenseForm onSubmit={onSubmit} nameInputRef={nameInputRef} />
       </div>
       <div>
         <ExpenseList
